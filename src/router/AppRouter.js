@@ -18,7 +18,7 @@ export const AppRouter = () => {
 
     // Extraer mi useContext
     const { auth, verificaToken } = useContext(AuthContext)
-    console.log(auth)
+    // console.log(auth)
 
     // Cuando el verificaToken cambie tiene que ir
     useEffect(() => {

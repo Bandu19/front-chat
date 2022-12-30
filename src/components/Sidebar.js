@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { AuthContext } from '../auth/AuthContext'
+import { ChatContext } from '../context/chat/ChatContext'
+
 import { SidebarChatItem } from './SidebarChatItem'
 
 export const Sidebar = () => {
 
-    const chats = [1, 2, 3, 4, 5, 6]
+    // const chats = [1, 2, 3, 4, 5, 6]
+    
+    // ** UseContext ==> ChatContext
+    const {chatState} = useContext(ChatContext)
+    
+    // ** UseContext ==> AuthContext
+    const {auth} = useContext(AuthContext)
+    const {uid} = auth
     return (
         <>
             {/* <!-- Sidebar inicio CHATS Conectados --> */}
             <div className="inbox_chat">
 
                 {
-                    chats.map((chat) => (
-                        <SidebarChatItem key={chat} />
+                    chatState?.usuarios
+                        .filter(user=>user.uid !== uid) // Para quitar al usuario que esta conectado
+                        .map((usuario) => (
+                        <SidebarChatItem 
+                            key={usuario.uid} 
+                            chat={usuario}
+                        />
                     ))
                 }
 

@@ -23,22 +23,25 @@ export const SocketProvider = ({ children }) => {
 
         if (auth.logged) {
             conectarSocket()
+        }else{
+            desconectarSocket()
         }
 
     }, [auth, conectarSocket])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!auth.logged) {
-            desconectarSocket()
-        }
+    //     if (!auth.logged) {
+    //         desconectarSocket()
+    //     }
 
-    }, [auth, desconectarSocket])
+    // }, [auth, desconectarSocket])
 
     // Escuchar los cambios en los usuarios conectados
     useEffect(() => {
         socket?.on('lista-usuarios', (usuarios) => {
             console.log(usuarios)
+            
             // El dispatch es una funcion memorizada
             dispatch({
                 type:types.usuariosCargados,

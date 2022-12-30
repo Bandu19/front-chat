@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { InboxPeople, Messages } from '../components'
 import { ChatSelect } from '../components/ChatSelect'
+import { ChatContext } from '../context/chat/ChatContext'
 import '../css/chat.css'
 
 export const ChatPage = () => {
+
+    // ** UseContext ==> ChatContext
+    const {chatState} = useContext(ChatContext)
+
     return (
         <div className="messaging">
             <div className="inbox_msg">
@@ -12,7 +17,8 @@ export const ChatPage = () => {
 
                 {/* Barra de los Mensajes del Chat */}
                 {
-                    (false) ? <Messages /> : <ChatSelect />
+                    (chatState.chatActivo) 
+                        ? <Messages /> : <ChatSelect />
                 }
 
             </div>
