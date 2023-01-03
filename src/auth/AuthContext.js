@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
 
     const [notificacion, setNotificacion] = useState(1)
 
+
     const login = async (email, password) => {
         // Llamar helpers/fetch.js
         const resp = await fetchSinToken('login', { email, password }, 'POST')
@@ -126,12 +127,8 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-    const enviarNotificacion = (num)=>{
-        setNotificacion(num)
-    }
-
     return (
-        <AuthContext.Provider value={{ login, register, verificaToken, logout, auth ,enviarNotificacion ,notificacion }}>
+        <AuthContext.Provider value={{ login, register, verificaToken, logout, auth, notificacion, setNotificacion }}>
             {children}
         </AuthContext.Provider>
     )

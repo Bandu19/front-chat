@@ -54,23 +54,26 @@ export const SocketProvider = ({ children }) => {
     }, [socket,dispatch])
 
     useEffect(()=>{
-        socket?.on('mensaje-personal',(mensaje)=>{
-            console.log(mensaje.mensajePersonal)
+        socket?.on('mensaje-personal',(mensajePersonal)=>{
+            // console.log(mensaje.mensajePersonal)
 
             dispatch({
                 type: types.nuevoMensaje,
-                payload: mensaje.mensajePersonal
+                payload: mensajePersonal
             })
         })
     },[socket,dispatch])
 
+    // Puerto de comunicación de Notification
     useEffect(()=>{
-        socket?.on('mensaje-personal',({mensajePersonal,notificacion})=>{
-            // console.log(mensajePersonal,notificacion)
-
+        socket?.on('notificacion-personal',({notificacion,mensajePersonal})=>{
+            console.log(notificacion)
+            // console.log(notificacion.notifyc)
+            console.log(mensajePersonal)
+            
             dispatch({
                 type: types.nuevaNotificacion,
-                payload: {mensajePersonal, notificacion}
+                payload: {notificacion,mensajePersonal}
             })
         })
     },[socket,dispatch])

@@ -8,12 +8,11 @@ export const SidebarChatItem = ({ chat }) => {
 
     // ** UseContext ==> ChatContext
     const { chatState, dispatch } = useContext(ChatContext)
-    // console.log(chatState)
+    console.log(chatState.mensajes)
 
-    // const { auth } = useContext(AuthContext)
+    const {auth} = useContext(AuthContext)
 
-    const { chatActivo } = chatState
-
+    const { chatActivo,notificaciones } = chatState
     const activarChat = () => {
 
         // if(chat.uid && auth.logged){
@@ -44,8 +43,13 @@ export const SidebarChatItem = ({ chat }) => {
                                 : <span className="text-danger">Offline</span>
                         }
                     </div>
+                        {
+                            (notificaciones >= 0 && auth.uid  )
+                                ?  null
+                                : <div>N°:{notificaciones}</div>
+                        }
+                         {/* <div>N°:{notificaciones}</div> */}
                     
-                    <div>N°{chat.notifyc}</div>
 
                 </div>
             </div>
