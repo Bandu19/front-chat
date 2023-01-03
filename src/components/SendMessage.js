@@ -7,20 +7,22 @@ import { ChatContext } from '../context/chat/ChatContext'
 export const SendMessage = () => {
 
     const [mensaje, setMensaje] = useState('')
-    
+
     // ** UseContext => SocketContext
     const  {socket} = useContext(SocketContext)
     
     // ** UseContext => AuthContext
-    const { auth } = useContext(AuthContext)
+    const { auth, notificacion , enviarNotificacion } = useContext(AuthContext)
 
     // ** UseContext ==> ChatContext
     const {chatState} = useContext(ChatContext)
-
+    // console.log(chatState)
   
     const onChange = ({target}) =>{
         setMensaje(target.value)
     }
+    
+
     const onSubmit = (ev) =>{
         ev.preventDefault()
 
@@ -28,11 +30,16 @@ export const SendMessage = () => {
             return
         }
 
+        // TODO: NOTIFICACIONES
+        let notifi = notificacion + 1
+        enviarNotificacion(notifi)
+
         // TODO: Emitir un evento de sockets para enviar el mensaje
         socket.emit('mensaje-personal',{
             de:auth.uid, // UID del usuario enviaando el mensaje
             para:chatState.chatActivo, // UID del usuario que recibe el mensaje
             mensaje, // lo que quiero enviar
+            notificacion
         })
 
         console.log(mensaje)
@@ -54,7 +61,10 @@ export const SendMessage = () => {
                         />
                     </div>
                     <div className="col-sm-3 text-center">
-                        <button className="msg_send_btn mt-3" type="submit">
+                        <button 
+                            className="msg_send_btn mt-3" 
+                            type="submit"
+                        >
                             enviar
                         </button>
                     </div>

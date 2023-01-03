@@ -1,26 +1,34 @@
 import React, { useContext } from 'react'
+import { AuthContext } from '../auth/AuthContext'
 import { ChatContext } from '../context/chat/ChatContext'
 import { types } from '../types/types'
 
-export const SidebarChatItem = ({chat}) => {
-    // console.log(chat)
+export const SidebarChatItem = ({ chat }) => {
+    console.log(chat.uid)
 
     // ** UseContext ==> ChatContext
-    const {chatState,dispatch} = useContext(ChatContext)
+    const { chatState, dispatch } = useContext(ChatContext)
+    // console.log(chatState)
 
-    const {chatActivo} = chatState
+    // const { auth } = useContext(AuthContext)
 
-    const activarChat = ()=>{
+    const { chatActivo } = chatState
+
+    const activarChat = () => {
+
+        // if(chat.uid && auth.logged){
+        //     enviarNotificacion(1) // resetea
+        // }
         dispatch({
             type: types.activarChat,
             payload: chat.uid
-        })    
+        })
     }
     return (
         <>
             {/* <!-- conversación activa inicio --> */}
-            <div 
-                className={`chat_list ${(chat.uid === chatActivo)&& 'active_chat'}`}
+            <div
+                className={`chat_list ${(chat.uid === chatActivo) && 'active_chat'}`}
                 onClick={activarChat}
             >
                 {/* active_chat */}
@@ -32,12 +40,31 @@ export const SidebarChatItem = ({chat}) => {
                         <h5>{chat.nombre}</h5>
                         {
                             (chat.online)
-                            ? <span className="text-success">Online</span>
-                            : <span className="text-danger">Offline</span>
+                                ? <span className="text-success">Online</span>
+                                : <span className="text-danger">Offline</span>
                         }
                     </div>
+                    
+                    <div>N°{chat.notifyc}</div>
+
                 </div>
             </div>
+
+            {/* <div>
+                {
+
+                    (chatActivo === auth.uid)
+                        ? <div>N°{notificaciones}</div>
+                        : <div>N°{notificaciones}</div>
+
+                    // (!chat.online)
+                    // // ? <div>N°{notificaciones}</div>
+                    // ? (chat.uid === chatActivo )
+                    //     ? <div>N°{notificaciones}</div>
+                    //     : null
+                    // : null
+                }
+            </div> */}
         </>
     )
 }

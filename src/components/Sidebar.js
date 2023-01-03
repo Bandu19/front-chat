@@ -33,7 +33,7 @@ export const Sidebar = () => {
 
 
                 {/* <!-- conversación inactiva inicio --> */}
-                <div className="chat_list">
+                {/* <div className="chat_list">
 
                     <div className="chat_people">
                         <div className="chat_img">
@@ -46,7 +46,7 @@ export const Sidebar = () => {
                         </div>
                     </div>
 
-                </div>
+                </div> */}
 
                 {/* <!-- Espacio extra para scroll --> */}
                 <div className="extra_space"></div>

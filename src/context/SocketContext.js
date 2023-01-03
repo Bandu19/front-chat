@@ -23,19 +23,21 @@ export const SocketProvider = ({ children }) => {
 
         if (auth.logged) {
             conectarSocket()
-        }else{
-            desconectarSocket()
         }
+        
+        // else{
+        //     desconectarSocket()
+        // }
 
     }, [auth, conectarSocket])
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     if (!auth.logged) {
-    //         desconectarSocket()
-    //     }
+        if (!auth.logged) {
+            desconectarSocket()
+        }
 
-    // }, [auth, desconectarSocket])
+    }, [auth, desconectarSocket])
 
     // Escuchar los cambios en los usuarios conectados
     useEffect(() => {
@@ -53,9 +55,26 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(()=>{
         socket?.on('mensaje-personal',(mensaje)=>{
-            console.log(mensaje)
+            console.log(mensaje.mensajePersonal)
+
+            dispatch({
+                type: types.nuevoMensaje,
+                payload: mensaje.mensajePersonal
+            })
         })
-    },[socket])
+    },[socket,dispatch])
+
+    useEffect(()=>{
+        socket?.on('mensaje-personal',({mensajePersonal,notificacion})=>{
+            // console.log(mensajePersonal,notificacion)
+
+            dispatch({
+                type: types.nuevaNotificacion,
+                payload: {mensajePersonal, notificacion}
+            })
+        })
+    },[socket,dispatch])
+
 
 
     return (

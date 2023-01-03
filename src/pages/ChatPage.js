@@ -17,6 +17,7 @@ export const ChatPage = () => {
 
                 {/* Barra de los Mensajes del Chat */}
                 {
+                    // AQUI TENGO QUE INGRESAR LOS CAMBIOS PARA LAS NOTIFICATION    
                     (chatState.chatActivo) 
                         ? <Messages /> : <ChatSelect />
                 }
