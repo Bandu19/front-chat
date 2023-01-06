@@ -4,7 +4,7 @@ const baseUrl = process.env.REACT_APP_API_URL
 export const fetchSinToken = async (endpoint, data, method = 'GET') => {
 
     //El path para cada RUTA
-    const url = `${baseUrl}/${endpoint}` // Nos conectamos a nuestra API
+    const url = `https://chat-back-production.up.railway.app/api/${endpoint}` // Nos conectamos a nuestra API
     console.log(url)
     if (method === 'GET') {
         const resp = await fetch(url)
@@ -25,7 +25,7 @@ export const fetchSinToken = async (endpoint, data, method = 'GET') => {
 export const fetchConToken = async (endpoint, data, method = 'GET') => {
 
     //El path para cada RUTA
-    const url = `${baseUrl}/${endpoint}` // Nos conectamos a nuestra API
+    const url = `https://chat-back-production.up.railway.app/api/${endpoint}` // Nos conectamos a nuestra API
 
     // Obtener nuestro Token desde el localStorage
     const token = localStorage.getItem('token') || ''
