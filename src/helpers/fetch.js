@@ -1,5 +1,5 @@
 
-const baseUrl = process.env.REACT_APP_API_URL
+// const baseUrl = process.env.REACT_APP_API_URL
 
 export const fetchSinToken = async (endpoint, data, method = 'GET') => {
 
