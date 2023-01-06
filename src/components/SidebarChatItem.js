@@ -1,6 +1,10 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../auth/AuthContext'
+// import { AuthContext } from '../auth/AuthContext'
 import { ChatContext } from '../context/chat/ChatContext'
+// import { SocketContext } from '../context/SocketContext'
+// import { fetchConToken, fetchSinToken } from '../helpers/fetch'
+import { fetchConToken } from '../helpers/fetch'
+import { scrollToBottomAnimated } from '../helpers/scrollToBottom'
 import { types } from '../types/types'
 
 export const SidebarChatItem = ({ chat }) => {
@@ -8,27 +12,45 @@ export const SidebarChatItem = ({ chat }) => {
 
     // ** UseContext ==> ChatContext
     const { chatState, dispatch } = useContext(ChatContext)
-    console.log(chatState.mensajes)
+    console.log(chatState)
 
-    const {auth} = useContext(AuthContext)
+    // const {auth} = useContext(AuthContext)
+    // const {ContadorN} = useContext(SocketContext)
 
-    const { chatActivo,notificaciones } = chatState
-    const activarChat = () => {
+    const { chatActivo } = chatState
+    
+    const activarChat = async() => {
 
-        // if(chat.uid && auth.logged){
-        //     enviarNotificacion(1) // resetea
-        // }
         dispatch({
             type: types.activarChat,
             payload: chat.uid
         })
+        // auth.uid,chatActivo
+        // const {uid} = auth
+        /// Cargar las Notificaciones del chat
+       
+
+        // const resp = await fetchSinToken('contador/contadorDE',{vl1,vl2})
+        // console.log(resp)
+
+      // Cargar los mensajes del chat
+        const resp = await fetchConToken(`mensajes/${chat.uid}`)
+        console.log(resp.mensajes)
+
+        dispatch({
+            type: types.cargarMensajes,
+            payload: resp.mensajes.reverse()
+        })
+
+        scrollToBottomAnimated('mensajes')
     }
+
     return (
         <>
             {/* <!-- conversación activa inicio --> */}
             <div
                 className={`chat_list ${(chat.uid === chatActivo) && 'active_chat'}`}
-                onClick={activarChat}
+                onClick={ activarChat}
             >
                 {/* active_chat */}
                 <div className="chat_people">
@@ -43,13 +65,6 @@ export const SidebarChatItem = ({ chat }) => {
                                 : <span className="text-danger">Offline</span>
                         }
                     </div>
-                        {
-                            (notificaciones >= 0 && auth.uid  )
-                                ?  null
-                                : <div>N°:{notificaciones}</div>
-                        }
-                         {/* <div>N°:{notificaciones}</div> */}
-                    
 
                 </div>
             </div>
@@ -62,7 +77,7 @@ export const SidebarChatItem = ({ chat }) => {
                         : <div>N°{notificaciones}</div>
 
                     // (!chat.online)
-                    // // ? <div>N°{notificaciones}</div>
+                    //   ? <div>N°{notificaciones}</div>
                     // ? (chat.uid === chatActivo )
                     //     ? <div>N°{notificaciones}</div>
                     //     : null

@@ -1,5 +1,7 @@
-import React, { createContext, useCallback, useState } from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
+import { ChatContext } from '../context/chat/ChatContext'
 import { fetchConToken, fetchSinToken } from '../helpers/fetch'
+import { types } from '../types/types'
 
 export const AuthContext = createContext()
 
@@ -15,9 +17,7 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState(initialState)
-
-    const [notificacion, setNotificacion] = useState(1)
-
+    const {dispatch} = useContext(ChatContext)
 
     const login = async (email, password) => {
         // Llamar helpers/fetch.js
@@ -120,6 +120,11 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
 
         localStorage.removeItem('token') // ELIMINAMOS del localStorage
+        
+        dispatch({
+            type: types.cerrarSesion
+        })
+        
         setAuth({
             checking: false, // SI el usuario esta autenticado o no
             logged: false,// si el usuario esta logeado
@@ -127,8 +132,14 @@ export const AuthProvider = ({ children }) => {
 
     }
 
+    const prueba = async (uid1, uid2)=>{
+        console.log(uid1, uid2)
+    //     const resp = await fetchSinToken('contador/contadorDE',{uid2,uid1})
+    //    console.log(resp)
+    }
+
     return (
-        <AuthContext.Provider value={{ login, register, verificaToken, logout, auth, notificacion, setNotificacion }}>
+        <AuthContext.Provider value={{ login, register, verificaToken, logout, auth, prueba }}>
             {children}
         </AuthContext.Provider>
     )

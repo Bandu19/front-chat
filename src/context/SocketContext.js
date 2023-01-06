@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../auth/AuthContext'
+// import { scrollToBottomAnimated } from '../helpers/scrollToBottom'
 import { useSocket } from '../hooks/useSocket'
 import { types } from '../types/types'
 import { ChatContext } from './chat/ChatContext'
@@ -10,7 +11,7 @@ export const SocketProvider = ({ children }) => {
 
     // Cusstom Hook
     // Conectandome al servidor del back en HEROKU
-    const { socket, online, conectarSocket, desconectarSocket } = useSocket('http://localhost:8080')
+    const { socket, online, conectarSocket, desconectarSocket } = useSocket('https://chat-back-production.up.railway.app/')
 
     // UseContext => AuthContext
     const { auth } = useContext(AuthContext)
@@ -18,6 +19,7 @@ export const SocketProvider = ({ children }) => {
     // UseaContext => ChatContext
     const {dispatch} = useContext(ChatContext)
 
+    const [ContadorN, setContadorN] = useState(0)
     // El efecto de la propiedad AUTH
     useEffect(() => {
 
@@ -61,28 +63,32 @@ export const SocketProvider = ({ children }) => {
                 type: types.nuevoMensaje,
                 payload: mensajePersonal
             })
+
+            // scrollToBottomAnimated('mensajes')
         })
     },[socket,dispatch])
 
     // Puerto de comunicación de Notification
     useEffect(()=>{
-        socket?.on('notificacion-personal',({notificacion,mensajePersonal})=>{
-            console.log(notificacion)
+        socket?.on('notificacion-personal',({contador,mensajePersonal})=>{
+            console.log(contador)
             // console.log(notificacion.notifyc)
             console.log(mensajePersonal)
+
+            setContadorN(contador)
             
             dispatch({
                 type: types.nuevaNotificacion,
-                payload: {notificacion,mensajePersonal}
+                payload: {contador,mensajePersonal}
             })
         })
-    },[socket,dispatch])
+    },[socket, dispatch])
 
 
 
     return (
 
-        <SocketContext.Provider value={{ socket, online }}>
+        <SocketContext.Provider value={{ socket, online, ContadorN }}>
             {children}
         </SocketContext.Provider>
 

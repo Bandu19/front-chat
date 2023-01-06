@@ -15,7 +15,11 @@ export const Messages = () => {
         <>
             {/* <!-- Chat inicio --> */}
             <div className="mesgs">
-                <div className="msg_history">
+                <div
+                    id="mensajes" 
+                    className="msg_history"
+                
+                >
                     {
                         chatState.mensajes.map(msg=>(
                             //ID DIEGO == ID OSCAR

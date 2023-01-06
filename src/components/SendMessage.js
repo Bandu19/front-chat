@@ -12,7 +12,7 @@ export const SendMessage = () => {
     const { socket } = useContext(SocketContext)
 
     // ** UseContext => AuthContext
-    const { auth, notificacion, setNotificacion } = useContext(AuthContext)
+    const { auth,prueba } = useContext(AuthContext)
 
     // ** UseContext ==> ChatContext
     const { chatState } = useContext(ChatContext)
@@ -30,16 +30,19 @@ export const SendMessage = () => {
             return
         }
 
-        // TODO: NOTIFICACIONES
-        let valor = notificacion + 1
-        setNotificacion(valor)
+        // // TODO: NOTIFICACIONES
+        // let valor = notificacion + 1
+        // setNotificacion(valor)
+        
+        console.log(auth.uid,chatState.chatActivo)
+        const ok = prueba(auth.uid,chatState.chatActivo)
+        console.log(ok)
 
         // TODO: Emitir un evento de sockets para enviar el mensaje
         socket.emit('mensaje-personal', {
             de: auth.uid, // UID del usuario enviaando el mensaje
             para: chatState.chatActivo, // UID del usuario que recibe el mensaje
             mensaje, // lo que quiero enviar
-            notificacion
         })
 
         console.log(mensaje)

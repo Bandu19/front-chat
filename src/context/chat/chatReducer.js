@@ -16,6 +16,15 @@ export const chatReducer = (state, action) => {
     // }
     switch (action.type) {
 
+        case types.cerrarSesion:
+            return {
+                uid: '',
+                chatActivo: null,
+                usuarios: [],
+                mensajes: [],
+                notificaciones: null
+            }    
+
         // Primer Evento|
         case types.usuariosCargados:
             return {
@@ -49,19 +58,25 @@ export const chatReducer = (state, action) => {
             } else {
                 return state
             }
+        
+        case types.cargarMensajes:    
+            return{
+                ...state,
+                mensajes: [...action.payload]
+            }
 
         case types.nuevaNotificacion:
             console.log(state)
-            // console.log(action.payload.notificacion)
-            // console.log(action.payload.mensajePersonal)
-
-            // id DIEGO ===========
+            
+            // TRUE =========== SI EXISTE EL ID diego
          
-            if (state.chatActivo === null && action.payload?.mensajePersonal.para) {
+            if (state.chatActivo === action.payload?.mensajePersonal.para ||
+                state.chatActivo === action.payload?.mensajePersonal.de
+                ) {
                 console.log('entro')
                 return {
                     ...state,
-                    notificaciones: action.payload?.notificacion.notifyc
+                    notificaciones: action.payload.contador
                 }
             } else {
                 return state
