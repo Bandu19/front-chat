@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom"
 import { LoginPage, RegisterPage } from '../pages'
 /*Importar Estilos CSS */
 import '../css/login-register.css'
+import { NotFound404 } from '../pages/NotFound404'
 
 export const AuthRouter = () => {
     return (
@@ -14,7 +15,7 @@ export const AuthRouter = () => {
                         <Route path="login" element={<LoginPage />} />
                         <Route path="register" element={<RegisterPage />} />
                         {/* <Route path="/*" element={<Navigate to="login" />} /> */}
-                        <Route path="*" element={<NotFound404 />} /> 
+                        <Route path="*" element={<NotFound404/>} /> 
                     </Routes>
                 </div>
             </div>
