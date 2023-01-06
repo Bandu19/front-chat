@@ -10,7 +10,7 @@ import {
 import { AuthContext } from '../auth/AuthContext'
 
 import { ChatPage } from '../pages'
-import { NotFound404 } from '../pages/NotFound404'
+// import { NotFound404 } from '../pages/NotFound404'
 import { AuthRouter } from './AuthRouter'
 import { PrivateRoute } from './PrivateRoute'
 import { PublicRoute } from './PublicRoute'
@@ -57,9 +57,9 @@ export const AppRouter = () => {
                             </PublicRoute>
                         }
                     />
-                     <Route path="*" element={<NotFound404 />} />
+                     {/* <Route path="*" element={<NotFound404 />} /> */}
                     {/*El /* es para que cuando se ingrese un path erroneo lo rediriga al principal */}
-                    {/* <Route path="/*" element={<Navigate to="/chatPages" />} /> */}
+                    <Route path="/*" element={<Navigate to="/chatPages" />} />
 
 
                 </Routes>
