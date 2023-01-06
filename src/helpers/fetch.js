@@ -5,7 +5,7 @@ export const fetchSinToken = async (endpoint, data, method = 'GET') => {
 
     //El path para cada RUTA
     const url = `${baseUrl}/${endpoint}` // Nos conectamos a nuestra API
-
+    console.log(url)
     if (method === 'GET') {
         const resp = await fetch(url)
         return await resp.json()
