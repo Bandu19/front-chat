@@ -50,7 +50,7 @@ export const AppRouter = () => {
                     />
 
                     <Route
-                        path="auth/*"
+                        path="/auth/*"
                         element={
                             <PublicRoute isAuthenticated={auth.logged}>
                                 <AuthRouter />
